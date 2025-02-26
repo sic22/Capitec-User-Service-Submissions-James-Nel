@@ -2,33 +2,32 @@
 
 As a Kubernetes administrator you are given access to 3 images, which together form a microservice-based application named: Capitec User Service. This is a simple application to used to onboard new users, as leads, so that different business units can pitch products to them. The application has the following components: 
 
-Postgres database: 
+- Postgres database: 
+   Image available from DockerHub 
 
-Image available from DockerHub 
+   Image referenced as: postgres 
 
-Image referenced as: postgres 
+   Setup to listen on port: 5432 
 
-Setup to listen on port: 5432 
+- Spring Boot Backend Service  
 
-Spring Boot Backend Service  
+  Images available from DockerHub 
+  
+  Windows-compatible image: thapeloseema/capitec-user-service:backend-amd64 
+  
+  Mac-arm compatible image: thapeloseema/capitec-user-service:backend-arm64 
+  
+  Setup to listen on port: 8080 
 
-Images available from DockerHub 
+- Angular Frontend Service  
 
-Windows-compatible image: thapeloseema/capitec-user-service:backend-amd64 
-
-Mac-arm compatible image: thapeloseema/capitec-user-service:backend-arm64 
-
-Setup to listen on port: 8080 
-
-Angular Frontend Service  
-
-Images available from DockerHub 
-
-Windows-compatible image: thapeloseema/capitec-user-service:frontend-windows-latest 
-
-Mac-ARM compatible image: thapeloseema/capitec-user-service:frontend-latest 
-
-Setup to listen on port: 4200 
+  Images available from DockerHub 
+  
+  Windows-compatible image: thapeloseema/capitec-user-service:frontend-windows-latest 
+  
+  Mac-ARM compatible image: thapeloseema/capitec-user-service:frontend-latest 
+  
+  Setup to listen on port: 4200 
 
  
 
