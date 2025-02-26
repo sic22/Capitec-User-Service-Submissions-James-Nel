@@ -2,7 +2,7 @@
 
 As a Kubernetes administrator you are given access to 3 images, which together form a microservice-based application named: Capitec User Service. This is a simple application to used to onboard new users, as leads, so that different business units can pitch products to them. The application has the following components: 
 
-- Postgres database: 
+- <b>Postgres database:</b> 
    Image available from DockerHub 
 
    Image referenced as: postgres 
