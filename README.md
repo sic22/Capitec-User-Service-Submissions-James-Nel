@@ -31,7 +31,7 @@ As a Kubernetes administrator you are given access to 3 images, which together f
 
 You are tasked with deploying this application on a local Kubernetes cluster such that the front-end application is available from outside of the Kubernetes cluster, the front-end can communicate internally with the backend, and the backend can communicate internally with the database. We need to have 3 instances of the front end always running, 4 instances of the backend, and 2 instances of the databases. 
 
-You will have received an invite to the Geeks4Learning Capitec-User-Service Repository, please create a branch in the repository, and name it following this format; your name and surname as follows: 
+You will have received an invite to the Geeks4Learning Capitec-User-Service Repository, please create a fork of the repository, and name it following this format; your name and surname as follows: 
 
 thapelo_seema 
 
