@@ -11,25 +11,23 @@ As a Kubernetes administrator you are given access to 3 images, which together f
 
 - <b>Spring Boot Backend Service</b> <br/> 
 
-  Images available from DockerHub 
-  
-  Windows-compatible image: thapeloseema/capitec-user-service:backend-amd64 
-  
-  Mac-arm compatible image: thapeloseema/capitec-user-service:backend-arm64 
-  
-  Setup to listen on port: 8080 
+    - Images available from DockerHub 
+     
+    - Windows-compatible image: thapeloseema/capitec-user-service:backend-amd64 
+     
+    - Mac-arm compatible image: thapeloseema/capitec-user-service:backend-arm64 
+     
+    - Setup to listen on port: 8080 
 
-- Angular Frontend Service  
+- <b>Angular Frontend Service</b> <br/> 
 
-  Images available from DockerHub 
-  
-  Windows-compatible image: thapeloseema/capitec-user-service:frontend-windows-latest 
-  
-  Mac-ARM compatible image: thapeloseema/capitec-user-service:frontend-latest 
-  
-  Setup to listen on port: 4200 
-
- 
+    - Images available from DockerHub 
+     
+    - Windows-compatible image: thapeloseema/capitec-user-service:frontend-windows-latest 
+     
+    - Mac-ARM compatible image: thapeloseema/capitec-user-service:frontend-latest 
+     
+    - Setup to listen on port: 4200 
 
 You are tasked with deploying this application on a local Kubernetes cluster such that the front-end application is available from outside of the Kubernetes cluster, the front-end can communicate internally with the backend, and the backend can communicate internally with the database. We need to have 3 instances of the front end always running, 4 instances of the backend, and 2 instances of the databases. 
 
