@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capitec-postgres
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: capitec-user-service
+  template:
+    metadata:
+      labels:
+        app: capitec-user-service
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:latest   # Specify the image name and tag
+          imagePullPolicy: Always   # Ensures that the latest image is always pulled
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: capitecdb
+            - name: POSTGRES_USER
+              value: admin
+            - name: POSTGRES_PASSWORD
+              value: adminpassword
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: capitec-postgres
+spec:
+  selector:
+    app: capitec-user-service
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capitec-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: capitec-user-service
+  template:
+    metadata:
+      labels:
+        app: capitec-user-service
+    spec:
+      containers:
+        - name: frontend
+          image: thapeloseema/capitec-user-service:frontend-amd64
+          imagePullPolicy: Always   # Ensures that the latest image is always pulled
+          ports:
+            - containerPort: 4200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: capitec-frontend
+spec:
+  selector:
+    app: capitec-user-service
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4200
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capitec-backend
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: capitec-user-service
+  template:
+    metadata:
+      labels:
+        app: capitec-user-service
+    spec:
+      containers:
+        - name: backend
+          image: thapeloseema/capitec-user-service:backend-amd64
+          imagePullPolicy: Always   # Ensures that the latest image is always pulled
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://capitec-postgres:5432/capitecdb
+            - name: SPRING_DATASOURCE_USERNAME
+              value: admin
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: adminpassword
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: capitec-backend
+spec:
+  selector:
+    app: capitec-user-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
