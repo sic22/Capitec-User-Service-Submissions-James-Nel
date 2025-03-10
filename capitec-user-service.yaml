@@ -2,60 +2,71 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: capitec-postgres
+  labels:
+    name: capitec-postgres
+    app: capitec-user-service
 spec:
   replicas: 2
   selector:
     matchLabels:
+      name: capitec-postgres-pod
       app: capitec-user-service
   template:
     metadata:
+      name: capitec-postgres-pod
       labels:
+        name: capitec-postgres-pod
         app: capitec-user-service
     spec:
       containers:
         - name: postgres
-          image: postgres:latest   # Specify the image name and tag
-          imagePullPolicy: Always   # Ensures that the latest image is always pulled
+          image: postgres:latest 
           ports:
             - containerPort: 5432
           env:
-            - name: POSTGRES_DB
-              value: capitecdb
             - name: POSTGRES_USER
-              value: admin
+              value: "postgres"
             - name: POSTGRES_PASSWORD
-              value: adminpassword
+              value: "postgres"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: capitec-postgres
+  name: db
+  labels:
+    name: postgres-service
+    app: capitec-user-service
 spec:
   selector:
+    name: capitec-postgres-pod
     app: capitec-user-service
   ports:
-    - protocol: TCP
-      port: 5432
+    - port: 5432
       targetPort: 5432
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: capitec-frontend
+  labels:
+    name: capitec-frontend
+    app: capitec-user-service
 spec:
   replicas: 3
   selector:
     matchLabels:
+      name: capitec-frontend-pod
       app: capitec-user-service
   template:
     metadata:
+      name: capitec-frontend-pod
       labels:
+        name: capitec-frontend-pod
         app: capitec-user-service
     spec:
       containers:
         - name: frontend
           image: thapeloseema/capitec-user-service:frontend-amd64
-          imagePullPolicy: Always   # Ensures that the latest image is always pulled
           ports:
             - containerPort: 4200
 ---
@@ -65,31 +76,37 @@ metadata:
   name: capitec-frontend
 spec:
   selector:
+    name: capitec-frontend
     app: capitec-user-service
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 4200
+      nodePort: 30004
   type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: capitec-backend
+  labels:
+    name: capitec-backend
+    app: apitec-user-service
 spec:
   replicas: 4
   selector:
     matchLabels:
+      name: capitec-backend-pod
       app: capitec-user-service
   template:
     metadata:
-      labels:
-        app: capitec-user-service
+        name: capitec-backend-pod
+        labels:
+          name: capitec-backend-pod
+          app: capitec-user-service
     spec:
       containers:
-        - name: backend
+        - name: capitec-backend-pod
           image: thapeloseema/capitec-user-service:backend-amd64
-          imagePullPolicy: Always   # Ensures that the latest image is always pulled
           ports:
             - containerPort: 8080
           env:
@@ -110,10 +127,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: capitec-backend
+  labels:
+    name: capitec-backend
+    app: capitec-user-service
 spec:
+  type: NodePort
   selector:
+    name: capitec-backend-pod
     app: capitec-user-service
   ports:
-    - protocol: TCP
-      port: 8080
+    - port: 8080
       targetPort: 8080
+      nodePort: 30005
