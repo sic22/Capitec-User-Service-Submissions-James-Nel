@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+  labels:
+    name: backend-service
+    provider: spring-boot
+    app: capitec-microservice-application
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    name: backend-pod
+    app: capitec-microservice-application

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+  labels:
+    name: frontend-deploy
+    app: capitec-microservice-application
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      name: frontend-pod
+      app: capitec-microservice-application
+  template:
+    metadata:
+      name: frontend-pod
+      labels:
+        name: frontend-pod
+        provider: angular
+        app: capitec-microservice-application
+    spec:
+      containers:
+      - name: frontend-pod
+        image: thapeloseema/capitec-user-service:frontend-amd64
+        ports: 
+          - containerPort: 4200

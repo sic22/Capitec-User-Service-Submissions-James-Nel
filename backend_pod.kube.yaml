@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backend-pod
+  labels:
+    name: backend-pod
+    provider: spring-boot
+    app: capitec-microservice-application
+spec:
+  containers:
+  - name: backend-pod
+    image: thapeloseema/capitec-user-service:backend-amd64
+    ports: 
+      - containerPort: 8080

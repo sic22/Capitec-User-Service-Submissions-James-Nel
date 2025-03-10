@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    name: frontend-service
+    provider: angular
+    app: capitec-microservice-application
+spec:
+  type: NodePort
+  ports:
+  - port: 4200
+    targetPort: 4200
+    nodePort: 30008
+  selector:
+    name: frontend-pod
+    app: capitec-microservice-application
